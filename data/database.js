@@ -7,24 +7,76 @@
  *  of patent rights can be found in the PATENTS file in the same directory.
  */
 
-// Model types
-class User extends Object {}
-class Widget extends Object {}
+import {MongoClient, ObjectID} from 'mongodb';
 
-// Mock data
-var viewer = new User();
-viewer.id = '1';
-viewer.name = 'Anonymous';
-var widgets = ['What\'s-it', 'Who\'s-it', 'How\'s-it'].map((name, i) => {
-  var widget = new Widget();
-  widget.name = name;
-  widget.id = `${i}`;
-  return widget;
+let itemsCollection;
+
+MongoClient.connect('mongodb://127.0.0.1:27017/relay', (error, db) => {
+  if (error) {
+    console.error(error);
+    process.exit(-1);
+  }
+  itemsCollection = db.collection('items');
+  itemsCollection.find().toArray((error, result) => {
+    if (error) {
+      console.error(error);
+      process.exit(-1);
+    } else {
+      if (!result.length) {
+        console.log('inserting initial data');
+        itemsCollection.insert([
+          {name: 'foo', likes: 0},
+          {name: 'bar', likes: 0}
+        ]);
+      }
+    }
+  });
 });
 
-module.exports = {
-  // Export methods that your schema can use to interact with your database
-  getViewer: () => viewer,
-  getWidget: (id) => widgets.find(w => w.id === id),
-  getWidgets: () => widgets,
-};
+
+export class Item extends Object {}
+
+
+function itemsFromData(data) {
+  const item = new Item();
+  item.id = data._id.toString();
+  item.name = data.name;
+  item.likes = data.likes;
+  return item;
+}
+
+export function getItems() {
+  return new Promise((resolve, reject) => {
+    itemsCollection.find().toArray((error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result.map(itemsFromData));
+      }
+    });
+  });
+}
+
+export function getItem(id) {
+  return new Promise((resolve, reject) => {
+    itemsCollection.findOne({_id: new ObjectID(id)}, (error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(itemsFromData(data));
+      }
+    });
+  });
+}
+
+export function likeItem(id) {
+  return new Promise((resolve, reject) => {
+    itemsCollection.update({_id: new ObjectID(id)}, {$inc: {likes: 1}}, (error) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+  });
+}

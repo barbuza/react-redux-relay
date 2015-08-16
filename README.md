@@ -1,34 +1,20 @@
-# Relay Starter Kit
+# relay / redux example
 
-This kit includes an app server, a GraphQL server, and a transpiler that you can use to get started building an app with Relay. For a walkthrough, see the [Relay tutorial](https://facebook.github.io/relay/docs/tutorial.html).
+sample app using `relay` and `redux` together in one component,
+storing relay data in `mongodb` as a bonus
 
-## Installation
+## developing
 
-```
-npm install
-```
+ensure you have mongodb running
 
-## Running
-
-Start a local server:
-
-```
-npm start
-```
-
-## Developing
-
-Any changes you make to files in the `js/` directory will cause the server to
-automatically rebuild the app and refresh your browser.
-
-If at any time you make changes to `data/schema.js`, stop the server,
+if at any time you make changes to `data/schema.js`, stop the server,
 regenerate `data/schema.json`, and restart the server:
 
 ```
+npm install
 npm run update-schema
 npm start
 ```
 
-## License
-
-Relay Starter Kit is [BSD licensed](./LICENSE). We also provide an additional [patent grant](./PATENTS).
+## license
+based on Relay Starter Kit (BSD licensed)
