@@ -11,8 +11,7 @@ import {MongoClient, ObjectID} from 'mongodb';
 
 let itemsCollection;
 
-var host = '192.168.99.100'; //'127.0.0.1';
-MongoClient.connect('mongodb://' + host + ':27017/relay', (error, db) => {
+MongoClient.connect('mongodb://127.0.0.1:27017/relay', (error, db) => {
   if (error) {
     console.error(error);
     process.exit(-1);
