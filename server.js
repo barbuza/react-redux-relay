@@ -39,6 +39,7 @@ var app = new WebpackDevServer(compiler, {
 app.use('/', express.static('public'));
 app.use('/node_modules/react', express.static('node_modules/react'));
 app.use('/node_modules/react-relay', express.static('node_modules/react-relay'));
+app.use('/node_modules/react-dom', express.static('node_modules/react-dom'));
 app.listen(APP_PORT, () => {
   console.log(`App is now running on http://localhost:${APP_PORT}`);
 });
