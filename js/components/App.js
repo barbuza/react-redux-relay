@@ -8,7 +8,7 @@ import { connect } from '../redux-compat';
 class App extends React.Component {
 
   likeItem(item) {
-    Relay.Store.update(new LikeItemMutation({item}));
+    Relay.Store.commitUpdate(new LikeItemMutation({item}));
   }
 
   reduxInc() {

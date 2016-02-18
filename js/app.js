@@ -7,7 +7,7 @@ import * as store from './store';
 const redux = createStore(combineReducers(store));
 
 
-React.render(
+ReactDOM.render(
   <Provider store={redux}>
     {() => (
       <Relay.RootContainer
