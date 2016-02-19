@@ -1,3 +1,5 @@
+import * as Relay from 'react-relay';
+
 export default class LikeItemMutation extends Relay.Mutation {
 
   static fragments = {

@@ -1,4 +1,5 @@
 import shallowCompare from 'react/lib/shallowCompare';
+import * as React from 'react';
 
 function getConnectName(cls) {
   const displayName = (cls.displayName || cls.name || 'Component');
@@ -66,7 +67,7 @@ export class Provider extends React.Component {
   }
 
   render() {
-    return this.props.children();
+    return this.props.children;
   }
 
 }

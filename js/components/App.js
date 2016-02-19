@@ -1,5 +1,7 @@
 import LikeItemMutation from '../mutations/LikeItemMutation';
 import { connect } from '../redux-compat';
+import * as Relay from 'react-relay';
+import * as React from 'react';
 
 
 @connect(state => ({
@@ -8,7 +10,7 @@ import { connect } from '../redux-compat';
 class App extends React.Component {
 
   likeItem(item) {
-    Relay.Store.update(new LikeItemMutation({item}));
+    Relay.Store.commitUpdate(new LikeItemMutation({item}));
   }
 
   reduxInc() {
